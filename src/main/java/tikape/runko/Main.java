@@ -76,6 +76,9 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 		Spark.post("luo_resepti/tallenna_ja_poistu", (req, res) -> {
 			// tallennetaan tällä hetkellä vain annos-tauluun
 			Annos luotuAnnos = annosDao.saveOrUpdate(new Annos(reseptiTMP.getNimi(),reseptiTMP.getOhje()));
+			// tuosta saa id:t
+			// tallennetaan raaka-aineet tietokantaan
+			
 			reseptiTMP.tyhjenna(); 	
 			res.redirect("/etusivu");
 			return "";
