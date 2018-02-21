@@ -20,7 +20,7 @@ public class AnnosRaakaAineDao{
     
     public AnnosRaakaAine findOne(int annos_id, int raaka_aine_id) throws SQLException{
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annosId = ? AND raakaAineId = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annos_Id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annos_id);
         stmt.setInt(2, raaka_aine_id);
 
@@ -58,18 +58,22 @@ public class AnnosRaakaAineDao{
         return annosRaakaAineet;
     }
     
-    public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine object) throws SQLException{
-        if (object.annosId == null && object.raakaAineId == null) {
-            return save(object);
+    public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine annosRaakaAine) throws SQLException{
+		// AnnosRaakaAine-olion annos.id ja raakaAine.id ei ole koskaan null:
+		// AnnosRaakaAine-taulussa ei voi olla riviä ilman vastaavia annoksia ja raaka-aineita.
+		// Kun tullaan tähän metodiin, on parametrina annetulla oliolla tiedossa annos.id ja raakaAine.id
+		// Jos tietokannassa ei ole vastaavaa annosRaakaAinetta, findOne palauttaa null
+		
+        if (findOne(annosRaakaAine.annosId,annosRaakaAine.raakaAineId) == null) {
+            return save(annosRaakaAine);
         } else {
-            // muulloin päivitetään asiakas
-            return update(object);
+            return update(annosRaakaAine);
         }
     }
     
     public void delete(int annos_id, int raaka_aine_id) throws SQLException{
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Annos WHERE annos_id = ? AND raaka_aine_id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE annos_id = ? AND raaka_aine_id = ?");
 
         stmt.setInt(1, annos_id);
         stmt.setInt(2, raaka_aine_id);
@@ -82,7 +86,7 @@ public class AnnosRaakaAineDao{
     private AnnosRaakaAine save(AnnosRaakaAine annosRaakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Annos"
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO AnnosRaakaAine"
                 + " (annos_id, raaka_aine_id, jarjestys, maara)"
                 + " VALUES (?, ?, ?, ?)");
         stmt.setInt(1, annosRaakaAine.getAnnosId());
@@ -115,7 +119,7 @@ public class AnnosRaakaAineDao{
     private AnnosRaakaAine update(AnnosRaakaAine annosRaakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Annos SET"
+        PreparedStatement stmt = conn.prepareStatement("UPDATE AnnosRaakaAine SET "
                 + "jarjestys = ?, maara = ? WHERE annos_id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annosRaakaAine.getJarjestys());      
         stmt.setString(2, annosRaakaAine.getMaara());
