@@ -20,7 +20,7 @@ public class AnnosRaakaAineDao{
     
     public AnnosRaakaAine findOne(int annos_id, int raaka_aine_id) throws SQLException{
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annos_Id = ? AND raaka_aine_id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annos_id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annos_id);
         stmt.setInt(2, raaka_aine_id);
 
@@ -59,9 +59,6 @@ public class AnnosRaakaAineDao{
     }
     
     public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine annosRaakaAine) throws SQLException{
-		// AnnosRaakaAine-olion annos.id ja raakaAine.id ei ole koskaan null:
-		// AnnosRaakaAine-taulussa ei voi olla riviä ilman vastaavia annoksia ja raaka-aineita.
-		// Kun tullaan tähän metodiin, on parametrina annetulla oliolla tiedossa annos.id ja raakaAine.id
 		// Jos tietokannassa ei ole vastaavaa annosRaakaAinetta, findOne palauttaa null
 		
         if (findOne(annosRaakaAine.annosId,annosRaakaAine.raakaAineId) == null) {
@@ -145,7 +142,11 @@ public class AnnosRaakaAineDao{
         
         while(i<annokset.size()){
             
-            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.id, RaakaAine.nimi FROM Annos, RaakaAine, AnnosRaakaAine WHERE Annos.nimi = ? AND AnnosRaakaAine.annos_id = Annos.id AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id");
+            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.id, "
+					+ "RaakaAine.nimi FROM Annos, RaakaAine, AnnosRaakaAine"
+					+ " WHERE Annos.nimi = ? AND AnnosRaakaAine.annos_id = Annos.id "
+					+ "AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id");
+			
             stmt.setString(1, annokset.get(i).getNimi());
 
             ResultSet rs = stmt.executeQuery();
