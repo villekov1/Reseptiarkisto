@@ -15,6 +15,7 @@ public class RaakaAine {
         this.nimi=nimi;
     }
     
+    @Override
     public String toString(){
         return this.nimi;
     }

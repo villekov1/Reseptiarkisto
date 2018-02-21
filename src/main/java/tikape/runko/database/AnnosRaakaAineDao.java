@@ -167,6 +167,43 @@ public class AnnosRaakaAineDao{
         
         return raakaAineMap;
     }
-    
+
+    public HashMap<RaakaAine, List<Annos>>  etsiAnnokset() throws SQLException {
+        RaakaAineDao aineDao = new RaakaAineDao(database);
+        HashMap<RaakaAine, List<Annos>> annoksetAineittainMap = new HashMap<>();
+        
+        Connection con = database.getConnection();
+        List<RaakaAine> aineet = aineDao.findAll();
+        
+        int i = 0;
+        
+        while (i<aineet.size()) {
+            PreparedStatement stmt = con.prepareStatement("SELECT Annos.id, Annos.nimi, Annos.ohje FROM Annos, AnnosRaakaAine, RaakaAine "
+                    + "WHERE RaakaAine.nimi = ? "
+                    + "AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id "
+                    + "AND Annos.id = AnnosRaakaAine.annos_id");
+            stmt.setString(1, aineet.get(i).nimi);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            List<Annos> annokset = new ArrayList<>();
+            
+            while (rs.next()) {
+                Annos annos = new Annos(rs.getInt("id"),rs.getString("nimi"),rs.getString("ohje"));
+                annokset.add(annos);
+            }
+            
+            annoksetAineittainMap.put(aineet.get(i),annokset);
+            
+            rs.close();
+            stmt.close();
+            
+            i++;
+        }
+        
+        con.close();
+        
+        return annoksetAineittainMap;
+    }
 
 }
