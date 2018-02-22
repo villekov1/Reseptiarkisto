@@ -68,8 +68,9 @@ public class Main {
         Spark.post("reseptit/delete/:id", (req, res) -> {
             //Poistetaan id:tä vastaava annos
             int id = Integer.parseInt(req.params(":id"));
-            annosDao.delete(id);
+            
             annosRaakaAineDao.deleteAnnoksenPerusteella(id);
+            annosDao.delete(id);
             
             res.redirect("/reseptit");
             return "";
