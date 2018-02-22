@@ -10,51 +10,63 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+public class Main {
 
-	public class Main {
-
-		// reseptin luonnin väliaikais tallennus
+    // reseptin luonnin väliaikais tallennus
 		static final Resepti_TMP luontilomake = new Resepti_TMP();
+    public static void main(String[] args) throws Exception {
+        File tiedosto = new File("reseptit.db");
+        Database database = new Database("jdbc:sqlite:" + tiedosto.getAbsolutePath());
 
-		public static void main(String[] args) throws Exception {
-			File tiedosto = new File("reseptit.db");
-		Database database = new Database("jdbc:sqlite:" + tiedosto.getAbsolutePath());
+        RaakaAineDao aineDao = new RaakaAineDao(database);
+	AnnosDao annosDao = new AnnosDao(database);
+	AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database);
+        
+        Spark.get("/raakaAineet", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("aineet", aineDao.findAll());
+             // TODO: Annoksien listaaminen ??
+            return new ModelAndView(map, "raakaAineet");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/reseptit", (req, res) -> {
+            List<Annos> annokset = new ArrayList<>();
+            List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
+            
+            
+            annokset = annosDao.findAll();
 
-		AnnosDao annosDao = new AnnosDao(database);
-		AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database);
-		RaakaAineDao raakaAineDao = new RaakaAineDao(database);
 
-		Spark.get("/reseptit", (req, res) -> {
-			List<Annos> annokset = new ArrayList<>();
-			List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
+            //Haetaan reseptien raaka-aineet Resepti_TMP-listana
+            List<Resepti_TMP> reseptit = annosRaakaAineDao.etsiRaakaAineet();
+            
+            int koko = reseptit.size();
+            HashMap map = new HashMap<>();
+            map.put("annokset", annokset);
+            map.put("reseptit", reseptit);
+            map.put("koko", koko);
 
-			annokset = annosDao.findAll();
+            return new ModelAndView(map, "reseptit");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.post("reseptit/delete/:id", (req, res) -> {
+            //Poistetaan id:tä vastaava annos
+            int id = Integer.parseInt(req.params(":id"));
+            annosDao.delete(id);
+            res.redirect("/reseptit");
+            return "";
+        });
+        
+        Spark.get("/etusivu", (req, res) -> {
+                HashMap map = new HashMap<>();
 
-			//Selvitetään seuraavaksi annoksiin sisältyvät raaka-aineet
-			//Tallennetaan nämä HashMappiin, jossa avaimena on annos ja avaimeen liittyvänä
-			//arvona lista, jossa on annoksen raaka-aineet
-			HashMap<Annos, List<RaakaAine>> raakaAineet = annosRaakaAineDao.etsiRaakaAineet();
+                return new ModelAndView(map, "etusivu");
+        }, new ThymeleafTemplateEngine());
 
-			HashMap map = new HashMap<>();
-			map.put("annokset", annokset);
-			map.put("raakaAineet", raakaAineet);
 
-			System.out.println(annokset);
-			System.out.println(raakaAineet);
 
-			return new ModelAndView(map, "reseptit");
-		}, new ThymeleafTemplateEngine());
 
-		Spark.get("/etusivu", (req, res) -> {
-			HashMap map = new HashMap<>();
-
-			return new ModelAndView(map, "etusivu");
-		}, new ThymeleafTemplateEngine());
-		
-		
-		
-		
-		// ---------- Alla reseptin luontiin liittyvät jutut -----------------
+        // ---------- Alla reseptin luontiin liittyvät jutut -----------------
 
 		Spark.post("/luo_resepti/lisaa_nimi", (req, res) -> {
 			luontilomake.setNimi(req.queryParams("reseptinNimi"));
@@ -82,9 +94,9 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 			int jarjestysNro = 1;
 			
 			for (RaakaAine_TMP lomakkeenRkaine : luontilomake.getRaakaAineet()) {
-				RaakaAine raakaAine = raakaAineDao.saveOrUpdate(new RaakaAine(lomakkeenRkaine.getNimi()));
+				RaakaAine raakaAine = aineDao.saveOrUpdate(new RaakaAine(lomakkeenRkaine.getNimi()));
 				
-				annosRaakaAineDao.saveOrUpdate(new AnnosRaakaAine(raakaAine.getId(), 
+				annosRaakaAineDao.saveOrUpdate(new AnnosRaakaAine(raakaAine.id, 
 						annos.getId(), jarjestysNro, lomakkeenRkaine.getMaara()));
 				
 				jarjestysNro++;	
@@ -116,5 +128,6 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 		
 		// --------- yllä reseptin luontiin liittyvät jutut ------------------
 
-	}
+
+    }
 }
