@@ -19,8 +19,13 @@
                 <ul>
                     <li th:each="annos: ${aine.annokset}">
                         <span th:text="${annos.nimi}">annos</span>
+                        
                     </li>
+                    
                 </ul>
+                
+                <p>Raaka-ainetta <span th:text="${aine.nimi}">aineen nimi</span>
+                    on käytetty <span th:text="${aine.koko}">annosten määrä</span> reseptissä.</p>
                 
             </li>            
         </ol>

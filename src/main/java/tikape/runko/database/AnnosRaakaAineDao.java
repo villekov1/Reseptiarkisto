@@ -213,6 +213,8 @@ public class AnnosRaakaAineDao {
                 Annos_TMP annos = new Annos_TMP(rs.getInt("id"), rs.getString("nimi"));
                 aine.annokset.add(annos);
             }
+            
+            aine.koko = aine.annokset.size();
 
             aineet.add(aine);
 
