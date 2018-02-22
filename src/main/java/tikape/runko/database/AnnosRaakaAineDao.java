@@ -81,6 +81,17 @@ public class AnnosRaakaAineDao{
         stmt.close();
         conn.close();
     }
+    public void deleteAnnoksenPerusteella(int annos_id) throws SQLException{
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE annos_id = ?");
+
+        stmt.setInt(1, annos_id);
+        stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+    }
+    
     
     private AnnosRaakaAine save(AnnosRaakaAine annosRaakaAine) throws SQLException {
 
@@ -122,8 +133,8 @@ public class AnnosRaakaAineDao{
                 + "jarjestys = ?, maara = ? WHERE annos_id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annosRaakaAine.getJarjestys());      
         stmt.setString(2, annosRaakaAine.getMaara());
-        stmt.setInt(4, annosRaakaAine.getAnnosId());
-        stmt.setInt(5, annosRaakaAine.getRaakaAineId());
+        stmt.setInt(3, annosRaakaAine.getAnnosId());
+        stmt.setInt(4, annosRaakaAine.getRaakaAineId());
         
         stmt.executeUpdate();
 
