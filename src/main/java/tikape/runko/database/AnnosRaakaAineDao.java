@@ -1,4 +1,4 @@
-package tikape.runko.database;getId()
+package tikape.runko.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
