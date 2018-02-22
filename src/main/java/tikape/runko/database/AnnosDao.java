@@ -59,7 +59,6 @@ public class AnnosDao implements Dao<Annos, Integer>{
     public Annos saveOrUpdate(Annos annos) throws SQLException{
 		// kun tietokantaan lisätään uusi annos, ei anneta annos olion id:lle arvoa. 
 		// tietokanta itse päättää id:n.
-		
         if (annos.id == null) {
             return save(annos);
         } else {
