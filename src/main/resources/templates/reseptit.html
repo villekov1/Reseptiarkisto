@@ -11,10 +11,8 @@
         <h1>Reseptit</h1>
         <p>Reseptejä tietokannassa: <span th:text="${koko}"></span></p>
 
-        <ul>
+        <ol>
             <li th:each="resepti: ${reseptit}">
-                <span th:text="${resepti.id}"></span>
-                <span>. </span>
                 <span style="font-weight:bold;" th:text="${resepti.nimi}"></span>
                 <form th:action="@{~/reseptit/delete/{id}(id=${resepti.id})}" method="POST">
                     <input type="submit" value="Poista"/>
@@ -35,7 +33,7 @@
                 <p>Ohje: <span th:text="${resepti.ohje}">ohje</span></p>
                 <hr></hr>
             </li>
-        </ul>
+        </ol>
         
         
         

@@ -32,8 +32,6 @@ public class Main {
             
             List<Aine_TMP> annokset = annosRaakaAineDao.etsiAnnokset();
             
-            System.out.println(annokset.get(1).annokset.get(0).nimi);
-            
             HashMap map = new HashMap<>();
             map.put("aineet", aineet);
             map.put("annokset", annokset);
