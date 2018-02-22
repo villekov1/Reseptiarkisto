@@ -76,7 +76,7 @@ public class Main {
             return "";
         });
         
-        Spark.get("/etusivu", (req, res) -> {
+        Spark.get("*", (req, res) -> {
             HashMap map = new HashMap<>();
             
             return new ModelAndView(map, "etusivu");
