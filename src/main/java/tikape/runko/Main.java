@@ -23,13 +23,18 @@ public class Main {
 	AnnosDao annosDao = new AnnosDao(database);
 	AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database);
         
-        //-------------------Raaka-aine lista alla----------------------------
+        //-------------------Raaka-aine lista alkaa----------------------------
         Spark.get("/raakaAineet", (req, res) -> {
+            List<RaakaAine> aineet = new ArrayList<>();
+            aineet = aineDao.findAll();
+            
+            
+            List<Aine_TMP> annokset = annosRaakaAineDao.etsiAnnokset();
+            
+            System.out.println(annokset.get(1).annokset.get(0).nimi);
+            
             HashMap map = new HashMap<>();
-            map.put("aineet", aineDao.findAll());
-            
-            HashMap<RaakaAine,List<Annos>> annokset = annosRaakaAineDao.etsiAnnokset();
-            
+            map.put("aineet", aineet);
             map.put("annokset", annokset);
             
             return new ModelAndView(map, "raakaAineet");

@@ -10,8 +10,7 @@ import java.util.List;
 import tikape.runko.Annos;
 import tikape.runko.AnnosRaakaAine;
 import tikape.runko.RaakaAine;
-import tikape.runko.tmp.RaakaAine_TMP;
-import tikape.runko.tmp.Resepti_TMP;
+import tikape.runko.tmp.*;
 
 public class AnnosRaakaAineDao{
     private Database database;
@@ -174,32 +173,32 @@ public class AnnosRaakaAineDao{
         return reseptit;
     }
 
-    public HashMap<RaakaAine, List<Annos>>  etsiAnnokset() throws SQLException {
+    public List<Aine_TMP>  etsiAnnokset() throws SQLException {
         RaakaAineDao aineDao = new RaakaAineDao(database);
-        HashMap<RaakaAine, List<Annos>> annoksetAineittainMap = new HashMap<>();
+        List<Aine_TMP> aineet = new ArrayList<>();
         
         Connection con = database.getConnection();
-        List<RaakaAine> aineet = aineDao.findAll();
+        List<RaakaAine> raakikset = aineDao.findAll();
         
         int i = 0;
         
-        while (i<aineet.size()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT Annos.id, Annos.nimi, Annos.ohje FROM Annos, AnnosRaakaAine, RaakaAine "
+        while (i<raakikset.size()) {
+            PreparedStatement stmt = con.prepareStatement("SELECT Annos.id, Annos.nimi FROM Annos, AnnosRaakaAine, RaakaAine "
                     + "WHERE RaakaAine.nimi = ? "
                     + "AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id "
                     + "AND Annos.id = AnnosRaakaAine.annos_id");
-            stmt.setString(1, aineet.get(i).nimi);
+            stmt.setString(1, raakikset.get(i).nimi);
             
             ResultSet rs = stmt.executeQuery();
+            Aine_TMP aine = new Aine_TMP(raakikset.get(i).id,raakikset.get(i).nimi);
             
-            List<Annos> annokset = new ArrayList<>();
             
             while (rs.next()) {
-                Annos annos = new Annos(rs.getInt("id"),rs.getString("nimi"),rs.getString("ohje"));
-                annokset.add(annos);
+                Annos_TMP annos = new Annos_TMP(rs.getInt("id"),rs.getString("nimi"));
+                aine.annokset.add(annos);
             }
             
-            annoksetAineittainMap.put(aineet.get(i),annokset);
+            aineet.add(aine);
             
             rs.close();
             stmt.close();
@@ -209,7 +208,7 @@ public class AnnosRaakaAineDao{
         
         con.close();
         
-        return annoksetAineittainMap;
+        return aineet;
     }
 
 }
