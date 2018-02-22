@@ -10,8 +10,7 @@ import java.util.List;
 import tikape.runko.Annos;
 import tikape.runko.AnnosRaakaAine;
 import tikape.runko.RaakaAine;
-import tikape.runko.tmp.RaakaAine_TMP;
-import tikape.runko.tmp.Resepti_TMP;
+import tikape.runko.tmp.*;
 
 public class AnnosRaakaAineDao{
     private Database database;
@@ -189,6 +188,43 @@ public class AnnosRaakaAineDao{
         
         return reseptit;
     }
-    
+
+    public List<Aine_TMP>  etsiAnnokset() throws SQLException {
+        RaakaAineDao aineDao = new RaakaAineDao(database);
+        List<Aine_TMP> aineet = new ArrayList<>();
+        
+        Connection con = database.getConnection();
+        List<RaakaAine> raakikset = aineDao.findAll();
+        
+        int i = 0;
+        
+        while (i<raakikset.size()) {
+            PreparedStatement stmt = con.prepareStatement("SELECT Annos.id, Annos.nimi FROM Annos, AnnosRaakaAine, RaakaAine "
+                    + "WHERE RaakaAine.nimi = ? "
+                    + "AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id "
+                    + "AND Annos.id = AnnosRaakaAine.annos_id");
+            stmt.setString(1, raakikset.get(i).nimi);
+            
+            ResultSet rs = stmt.executeQuery();
+            Aine_TMP aine = new Aine_TMP(raakikset.get(i).id,raakikset.get(i).nimi);
+            
+            
+            while (rs.next()) {
+                Annos_TMP annos = new Annos_TMP(rs.getInt("id"),rs.getString("nimi"));
+                aine.annokset.add(annos);
+            }
+            
+            aineet.add(aine);
+            
+            rs.close();
+            stmt.close();
+            
+            i++;
+        }
+        
+        con.close();
+        
+        return aineet;
+    }
 
 }

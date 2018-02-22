@@ -13,6 +13,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 public class Main {
 
     // reseptin luonnin väliaikais tallennus
+
     static final Resepti_TMP luontilomake = new Resepti_TMP();
 
     public static void main(String[] args) throws Exception {
@@ -23,14 +24,27 @@ public class Main {
         AnnosDao annosDao = new AnnosDao(database);
         AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database);
         
+        //-------------------Raaka-aine lista alkaa----------------------------
         Spark.get("/raakaAineet", (req, res) -> {
+            List<RaakaAine> aineet = new ArrayList<>();
+            aineet = aineDao.findAll();
+            
+            
+            List<Aine_TMP> annokset = annosRaakaAineDao.etsiAnnokset();
+            
+            System.out.println(annokset.get(1).annokset.get(0).nimi);
+            
             HashMap map = new HashMap<>();
-            map.put("aineet", aineDao.findAll());
-            // TODO: Annoksien listaaminen ??
+            map.put("aineet", aineet);
+            map.put("annokset", annokset);
+            
             return new ModelAndView(map, "raakaAineet");
         }, new ThymeleafTemplateEngine());
         
-        Spark.get("/reseptit", (req, res) ->  {
+        //--------------------Raaka-aine lista päättyy-------------------------
+        
+        Spark.get("/reseptit", (req, res) -> {
+
             List<Annos> annokset = new ArrayList<>();
             List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
             

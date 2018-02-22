@@ -11,9 +11,17 @@
         
         <h1>Raaka-aineet</h1>
         <ul>
-            <li th:each="aine: ${aineet}">
+            <li th:each="aine: ${annokset}">
                 <span th:text="${aine.id}">id</span>
                 <span th:text="${aine.nimi}">nimi</span>
+                
+                <p>Sisältyy annoksiin: </p>
+                
+                <ul>
+                    <li th:each="annos: ${aine.annokset}">
+                        <span th:text="${annos.nimi}">annos</span>
+                    </li>
+                </ul>
                 
             </li>            
         </ul>
