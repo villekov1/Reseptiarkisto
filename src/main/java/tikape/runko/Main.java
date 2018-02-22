@@ -23,8 +23,7 @@ public class Main {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
         
-        File tiedosto = new File("reseptit.db");
-        Database database = new Database("jdbc:sqlite:" + tiedosto.getAbsolutePath());
+        Database database = new Database();
         
         RaakaAineDao aineDao = new RaakaAineDao(database);
         AnnosDao annosDao = new AnnosDao(database);
