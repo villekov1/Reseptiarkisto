@@ -21,7 +21,7 @@ public class AnnosRaakaAineDao{
     
     public AnnosRaakaAine findOne(int annos_id, int raaka_aine_id) throws SQLException{
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annosId = ? AND raakaAineId = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE annos_id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annos_id);
         stmt.setInt(2, raaka_aine_id);
 
@@ -59,18 +59,19 @@ public class AnnosRaakaAineDao{
         return annosRaakaAineet;
     }
     
-    public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine object) throws SQLException{
-        if (object.annosId == null && object.raakaAineId == null) {
-            return save(object);
+    public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine annosRaakaAine) throws SQLException{
+		// Jos tietokannassa ei ole vastaavaa annosRaakaAinetta, findOne palauttaa null
+		
+        if (findOne(annosRaakaAine.annosId,annosRaakaAine.raakaAineId) == null) {
+            return save(annosRaakaAine);
         } else {
-            // muulloin päivitetään asiakas
-            return update(object);
+            return update(annosRaakaAine);
         }
     }
     
     public void delete(int annos_id, int raaka_aine_id) throws SQLException{
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Annos WHERE annos_id = ? AND raaka_aine_id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE annos_id = ? AND raaka_aine_id = ?");
 
         stmt.setInt(1, annos_id);
         stmt.setInt(2, raaka_aine_id);
@@ -79,11 +80,22 @@ public class AnnosRaakaAineDao{
         stmt.close();
         conn.close();
     }
+    public void deleteAnnoksenPerusteella(int annos_id) throws SQLException{
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE annos_id = ?");
+
+        stmt.setInt(1, annos_id);
+        stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+    }
+    
     
     private AnnosRaakaAine save(AnnosRaakaAine annosRaakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Annos"
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO AnnosRaakaAine"
                 + " (annos_id, raaka_aine_id, jarjestys, maara)"
                 + " VALUES (?, ?, ?, ?)");
         stmt.setInt(1, annosRaakaAine.getAnnosId());
@@ -116,12 +128,12 @@ public class AnnosRaakaAineDao{
     private AnnosRaakaAine update(AnnosRaakaAine annosRaakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Annos SET"
+        PreparedStatement stmt = conn.prepareStatement("UPDATE AnnosRaakaAine SET "
                 + "jarjestys = ?, maara = ? WHERE annos_id = ? AND raaka_aine_id = ?");
         stmt.setInt(1, annosRaakaAine.getJarjestys());      
         stmt.setString(2, annosRaakaAine.getMaara());
-        stmt.setInt(4, annosRaakaAine.getAnnosId());
-        stmt.setInt(5, annosRaakaAine.getRaakaAineId());
+        stmt.setInt(3, annosRaakaAine.getAnnosId());
+        stmt.setInt(4, annosRaakaAine.getRaakaAineId());
         
         stmt.executeUpdate();
 
@@ -141,8 +153,12 @@ public class AnnosRaakaAineDao{
         int i=0;
         
         while(i<annokset.size()){
-            
-            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.nimi, Annos.ohje, AnnosRaakaAine.maara FROM Annos, RaakaAine, AnnosRaakaAine WHERE Annos.nimi = ? AND AnnosRaakaAine.annos_id = Annos.id AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id");
+            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.nimi, "
+					+ "AnnosRaakaAine.maara FROM Annos, RaakaAine, AnnosRaakaAine"
+					+ " WHERE Annos.nimi = ? AND AnnosRaakaAine.annos_id = Annos.id "
+					+ "AND AnnosRaakaAine.raaka_aine_id = RaakaAine.id");
+			
+
             stmt.setString(1, annokset.get(i).getNimi());
 
             ResultSet rs = stmt.executeQuery();

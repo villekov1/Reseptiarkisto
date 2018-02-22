@@ -69,12 +69,12 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     }
     
     public RaakaAine saveOrUpdate(RaakaAine object) throws SQLException {
-        if (object.id==null) {
+        RaakaAine rkaine = findByName(object.nimi);
+        
+        if (rkaine == null) {
             return save(object);
         }
-        else {
-            return update(object);
-        }
+        return rkaine;
     }
     
     @Override 
