@@ -56,6 +56,59 @@ public class AnnosDao implements Dao<Annos, Integer>{
         return annokset;
     }
     
+    public Annos findByName(String nimi) throws SQLException {
+        Connection con = database.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Annos WHERE nimi = ?");
+        stmt.setString(1, nimi);
+
+        ResultSet rs = stmt.executeQuery();
+        
+        if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            con.close();
+
+            return null;
+        }
+        
+        Annos annos = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("ohje"));
+
+        rs.close();
+        stmt.close();
+        con.close();
+
+        return annos;
+    }
+    
+    public List<Annos> findNameLike(String nimi) throws SQLException {
+        Connection con = database.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Annos WHERE nimi LIKE %?%");
+        stmt.setString(1, nimi);
+
+        List<Annos> annokset = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        
+        if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            con.close();
+
+            return null;
+        }
+
+        while (rs.next()) {
+            Annos annos = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("ohje"));
+            annokset.add(annos);
+        }
+
+        rs.close();
+        stmt.close();
+        con.close();
+
+        return annokset;
+    }
+    
     public Annos saveOrUpdate(Annos annos) throws SQLException{
 		// kun tietokantaan lisätään uusi annos, ei anneta annos olion id:lle arvoa. 
 		// tietokanta itse päättää id:n.

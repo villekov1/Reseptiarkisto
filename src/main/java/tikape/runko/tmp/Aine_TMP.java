@@ -7,6 +7,7 @@ public class Aine_TMP {
 
     public Integer id;
     public String nimi;
+    public int koko;
     public final List<Annos_TMP> annokset;
 
     public Aine_TMP(Integer id, String nimi)  {
