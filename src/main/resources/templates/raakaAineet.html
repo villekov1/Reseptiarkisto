@@ -12,7 +12,7 @@
         <h1>Raaka-aineet</h1>
         <ol>
             <li th:each="aine: ${annokset}">
-                <span th:text="${aine.nimi}">nimi</span>
+                <span style="font-weight: bold;" th:text="${aine.nimi}">nimi</span>
                 
                 <p>Sisältyy annoksiin: </p>
                 
@@ -26,6 +26,8 @@
                 
                 <p>Raaka-ainetta <span th:text="${aine.nimi}">aineen nimi</span>
                     on käytetty <span th:text="${aine.koko}">annosten määrä</span> reseptissä.</p>
+                
+                <hr></hr>
                 
             </li>            
         </ol>
