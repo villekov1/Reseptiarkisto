@@ -73,6 +73,7 @@ public class Main {
             String haettava = req.queryParams("haettava");
             haetutAnnokset = annosDao.findNameLike(haettava);
             haetutRaakaAineet = aineDao.findNameLike(haettava);
+            System.out.println(haetutAnnokset);
             
             res.redirect("/haku");
             return "";
