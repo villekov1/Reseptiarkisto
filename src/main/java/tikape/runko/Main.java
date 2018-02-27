@@ -16,7 +16,9 @@ public class Main {
     // reseptin luonnin väliaikais tallennus
 
     static final Resepti_TMP luontilomake = new Resepti_TMP();
-
+    static List<Annos> haetutAnnokset = new ArrayList<>();
+    static List<RaakaAine> haetutRaakaAineet = new ArrayList<>();
+    
     public static void main(String[] args) throws Exception {
         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
         if (System.getenv("PORT") != null) {
@@ -28,6 +30,7 @@ public class Main {
         RaakaAineDao aineDao = new RaakaAineDao(database);
         AnnosDao annosDao = new AnnosDao(database);
         AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database);
+        
         
         //-------------------Raaka-aine lista alkaa----------------------------
         Spark.get("/raakaAineet", (req, res) -> {
@@ -66,10 +69,22 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/etusivu/haku", (req, res) -> {
-
+            
+            String haettava = req.queryParams("haettava");
+            haetutAnnokset = annosDao.findNameLike(haettava);
+            haetutRaakaAineet = aineDao.findNameLike(haettava);
+            
             res.redirect("/haku");
             return "";
         });
+        
+        Spark.get("/haku", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("haetutAnnokset", haetutAnnokset);
+            map.put("haetutRaakaAIneet", haetutRaakaAineet);
+            
+            return new ModelAndView(map, "etusivu");
+        }, new ThymeleafTemplateEngine());
         
         Spark.post("reseptit/delete/:id", (req, res) -> {
             //Poistetaan id:tä vastaava annos
