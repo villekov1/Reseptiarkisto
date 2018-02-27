@@ -65,6 +65,12 @@ public class Main {
             return new ModelAndView(map, "reseptit");
         }, new ThymeleafTemplateEngine());
         
+        Spark.post("/etusivu/haku", (req, res) -> {
+
+            res.redirect("/haku");
+            return "";
+        });
+        
         Spark.post("reseptit/delete/:id", (req, res) -> {
             //Poistetaan id:tä vastaava annos
             int id = Integer.parseInt(req.params(":id"));
