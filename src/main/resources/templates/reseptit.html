@@ -15,7 +15,7 @@
             <li th:each="resepti: ${reseptit}">
                 
                 <form th:action="@{~/reseptit/delete/{id}(id=${resepti.id})}" method="POST">
-                    <span style="font-weight:bold;" th:text="${resepti.nimi}"></span>   <input type="submit" value="Poista"/>
+                    <span style="font-weight:bold;" th:text="${resepti.nimi}"></span> <pre>&#9;</pre> <input type="submit" value="Poista"/>
                 </form>
 
                 <p>Raaka-aineet:</p>
