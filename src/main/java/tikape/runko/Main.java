@@ -83,7 +83,7 @@ public class Main {
         Spark.get("/haku", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("haetutAnnokset", haetutAnnokset);
-            map.put("haetutRaakaAIneet", haetutRaakaAineet);
+            map.put("haetutRaakaAineet", haetutRaakaAineet);
             
             return new ModelAndView(map, "haku");
         }, new ThymeleafTemplateEngine());
