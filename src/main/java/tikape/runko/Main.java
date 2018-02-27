@@ -108,13 +108,13 @@ public class Main {
 
         // ---------- Alla reseptin luontiin liittyvät jutut -----------------
         Spark.post("/luo_resepti/lisaa_nimi", (req, res) -> {
-            luontilomake.setNimi(req.queryParams("reseptinNimi"));
+            luontilomake.setNimi(req.queryParams("reseptinNimi").toLowerCase());
             res.redirect("/luo_resepti");
             return "";
         });
         
         Spark.post("/luo_resepti/lisaa_raakaAine", (req, res) -> {
-            luontilomake.lisaaRaakaAine(new RaakaAine_TMP(req.queryParams("rkaine"),
+            luontilomake.lisaaRaakaAine(new RaakaAine_TMP(req.queryParams("rkaine").toLowerCase(),
                     req.queryParams("maara")));
             res.redirect("/luo_resepti");
             return "";

@@ -40,7 +40,7 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         Connection con = database.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM RaakaAine WHERE nimi LIKE ?");
         
-        stmt.setString(1, "%lower(" + name + ")%");
+        stmt.setString(1, "%" + name + "%");
 
         List<RaakaAine> aineet = new ArrayList<>();
 
