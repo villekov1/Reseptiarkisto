@@ -104,6 +104,8 @@ public class Main {
         
         Spark.get("/etusivu", (req, res) -> {
             HashMap map = new HashMap<>();
+            haetutAnnokset.clear();
+            haetutRaakaAineet.clear();
             
             return new ModelAndView(map, "etusivu");
         }, new ThymeleafTemplateEngine());
