@@ -68,7 +68,7 @@ public class Main {
             return new ModelAndView(map, "reseptit");
         }, new ThymeleafTemplateEngine());
         
-        Spark.post("etusivu/haku", (req, res) -> {
+        Spark.post("etusivu/hae", (req, res) -> {
             
             String haettava = req.queryParams("haettava");
             haetutAnnokset = annosDao.findNameLike(haettava);
