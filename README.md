@@ -18,7 +18,7 @@ Reseptiarkistolla on neljä eri toiminnallisuutta, jotka tulevat käyttäjän n�
 
 - Oman reseptin luominen tapahtuu “Luo uusi resepti” -linkistä. Käyttäjälle aukeaa näkymä, jossa hän voi antaa reseptille nimen, tarvittavat raaka-aineet ja määrät, sekä ohjeen. Jokaisen valinnan jälkeen on tärkeää muistaa tallentaa käyttäjän antama määrite tekstikentän jälkeen löytyvästä tallennusnäppäimestä (esim. Reseptin nimen kirjoittamisen jälkeen painetaan “Anna nimi” -painiketta). Tallennuksen jälkeen käyttäjän lisäykset tulevat näkyviin sivun yläosaan. Kun kaikki valinnat ovat käyttäjän mielestä kunnossa, painaa hän “tallenna” -painiketta sivun alaosasta. "Tyhjennä" -painike tyhjentää lomakkeen sisällön. Ethän paina tätä näppäintä, jos tiedät jonkun muun työstävän uutta reseptiä!
 
-- Hakutoiminnallisuus toimii siten, että käyttäjä syöttää tekstikenttään hakusanan ja järjestelmä etsii tietokannasta osumat, jotka näytetään käyttäjälle. Jos käyttäjä esimerkiksi syöttää pelkän kirjaimen “a”, hakutoiminnallisuus etsii tietokannasta kaikki a-kirjaimen omaavat reseptit sekä raaka-aineet. 
+- Hakutoiminnallisuus toimii siten, että käyttäjä syöttää tekstikenttään hakusanan ja järjestelmä etsii sen perusteella tietokannasta osumat, jotka näytetään käyttäjälle. Jos käyttäjä esimerkiksi syöttää pelkän kirjaimen “a”, hakutoiminnallisuus etsii tietokannasta kaikki a-kirjaimen omaavat reseptit sekä raaka-aineet. Tyhjä hakukenttä näyttää kaikki reseptit ja raaka-aineet.
 
 
 Puutteita:
