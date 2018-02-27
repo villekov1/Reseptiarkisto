@@ -86,7 +86,6 @@ public class AnnosDao implements Dao<Annos, Integer>{
         stmt.setString(1, "%" + nimi + "%");
 
         List<Annos> annokset = new ArrayList<>();
-        System.out.println(annokset);
         
         ResultSet rs = stmt.executeQuery();
         

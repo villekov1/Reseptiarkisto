@@ -44,6 +44,7 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         List<RaakaAine> aineet = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
+        
         /*if (!rs.next()) {
             rs.close();
             stmt.close();
