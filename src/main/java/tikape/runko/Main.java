@@ -68,7 +68,7 @@ public class Main {
             return new ModelAndView(map, "reseptit");
         }, new ThymeleafTemplateEngine());
         
-        Spark.post("etusivu/hae", (req, res) -> {
+        Spark.post("/etusivu/hae", (req, res) -> {
             
             String haettava = req.queryParams("haettava");
             haetutAnnokset = annosDao.findNameLike(haettava);
@@ -83,7 +83,7 @@ public class Main {
             map.put("haetutAnnokset", haetutAnnokset);
             map.put("haetutRaakaAIneet", haetutRaakaAineet);
             
-            return new ModelAndView(map, "etusivu");
+            return new ModelAndView(map, "haku");
         }, new ThymeleafTemplateEngine());
         
         Spark.post("reseptit/delete/:id", (req, res) -> {
