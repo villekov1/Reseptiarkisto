@@ -82,8 +82,8 @@ public class AnnosDao implements Dao<Annos, Integer>{
     
     public List<Annos> findNameLike(String nimi) throws SQLException {
         Connection con = database.getConnection();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Annos WHERE nimi LIKE %?%");
-        stmt.setString(1, nimi);
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Annos WHERE nimi LIKE ?");
+        stmt.setString(1, "%"+nimi+"%");
 
         List<Annos> annokset = new ArrayList<>();
         System.out.println(annokset);
