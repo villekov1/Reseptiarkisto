@@ -10,6 +10,7 @@
         
         
         <h1>Raaka-aineet</h1>
+        <p>Raaka-aineita tietokannassa: <span th:text="${koko}"></span></p>
         <ol>
             <li th:each="aine: ${annokset}">
                 <span style="font-weight: bold;" th:text="${aine.nimi}">nimi</span>

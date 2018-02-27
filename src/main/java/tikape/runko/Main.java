@@ -39,10 +39,12 @@ public class Main {
             
             
             List<Aine_TMP> annokset = annosRaakaAineDao.etsiAnnokset();
+            int koko = annokset.size();
             
             HashMap map = new HashMap<>();
             map.put("aineet", aineet);
             map.put("annokset", annokset);
+            map.put("koko", koko);
             
             return new ModelAndView(map, "raakaAineet");
         }, new ThymeleafTemplateEngine());
