@@ -70,7 +70,8 @@ public class Main {
         
         Spark.post("/etusivu/hae", (req, res) -> {
             
-            String haettava = req.queryParams("haettava");
+            String haettava = req.queryParams("haettava").toLowerCase();
+            
             haetutAnnokset = annosDao.findNameLike(haettava);
             haetutRaakaAineet = aineDao.findNameLike(haettava);
             System.out.println(haettava);

@@ -39,7 +39,8 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     public List<RaakaAine> findNameLike(String name) throws SQLException {
         Connection con = database.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM RaakaAine WHERE nimi LIKE ?");
-        stmt.setString(1, "%" + name + "%");
+        
+        stmt.setString(1, "%lower(" + name + ")%");
 
         List<RaakaAine> aineet = new ArrayList<>();
 
