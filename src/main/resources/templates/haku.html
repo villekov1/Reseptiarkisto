@@ -11,7 +11,7 @@
         
         <h1>Löydetyt annokset</h1>
         <ol>
-            <li th:each="annos ${haetutAnnokset}">
+            <li th:each="annos: ${haetutAnnokset}">
                 <span th:text="${annos.nimi}">annos</span>
                 <hr></hr>
                 
@@ -20,7 +20,7 @@
         
         <h1>Löydetyt raaka-aineet</h1>
         <ol>
-            <li th:each="aines ${haetutRaakaAineet}">
+            <li th:each="aines: ${haetutRaakaAineet}">
                 <span th:text="${aines.nimi}">raaka-aine</span>
                 <hr></hr>
                 
