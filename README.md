@@ -23,7 +23,7 @@ Reseptiarkistolla on neljä eri toiminnallisuutta, jotka tulevat käyttäjän n�
 
 Puutteita:
 
-- Reseptisivu ei ole jokaiselle käyttäjälle yksilöllinen, vaan sivustosta on tehty tarkoituksella enemmän kollektiivinen.
+- Reseptien luontisivu ei ole jokaiselle käyttäjälle yksilöllinen, vaan sivustosta on tehty tarkoituksella enemmän kollektiivinen. Tämä mahdollistaa reseptien laatimisen yhteistyönä!
 - Yksittäisiä raaka-aineita ei voi poistaa, pelkästään reseptejä. Tämä on tehty sen takia koska yhden raaka-aineen poistaminen vaikuttaa koko reseptin sisältöön merkittävästi. 
 - Valmiita reseptejä ei voi muokata, mutta niitä voi kuitenkin poistaa. Tässä perusteluna lainataan edellä mainittua, eli yksittäisten raaka-aineiden muokkaaminen / poistaminen vaikuttaa koko reseptin rakenteeseen. 
 - Tekstikenttien merkkirajoitteet. Esim. annoksen nimelle on varattu vain 300 merkkiä ja ohjeelle 1000 merkkiä. Tämä sen takia ettei tietokanta paisuisi liian suureksi.
