@@ -12,13 +12,13 @@ Reseptiarkistolla on neljä eri toiminnallisuutta, jotka tulevat käyttäjän n�
 3) “Luo uusi resepti” antaa käyttäjälle mahdollisuuden tallentaa oman reseptinsä tietokantaan
 4) “Haku” hakee käyttäjän syöttämän tekstin tietokannasta, ja näyttää osumat. 
 
-1) “Reseptit” -sivulla käyttäjä näkee listalta kaikki tietokantaan tallennetut reseptit (sisältäen reseptin nimen, tarvittavat raaka-aineet sekä valmistusohjeen). Mikäli käyttäjä havaitsee virheellisen tai aiheettoman reseptin, voi hän poistaa reseptin nimen vierestä löytyvästä “poista” -painikkeesta. 
+- “Reseptit” -sivulla käyttäjä näkee listalta kaikki tietokantaan tallennetut reseptit (sisältäen reseptin nimen, tarvittavat raaka-aineet sekä valmistusohjeen). Mikäli käyttäjä havaitsee virheellisen tai aiheettoman reseptin, voi hän poistaa reseptin nimen vierestä löytyvästä “poista” -painikkeesta. 
 
-2) Reseptien sisältämät raaka-aineet löytyvät “Raaka-aineet” -linkistä. Raaka-aineet on listattu niin, että aineen alapuolella lukee myös annokset joista löytyy kyseistä raaka-ainetta.   
+- Reseptien sisältämät raaka-aineet löytyvät “Raaka-aineet” -linkistä. Raaka-aineet on listattu niin, että aineen alapuolella lukee myös annokset joista löytyy kyseistä raaka-ainetta.   
 
-3) Oman reseptin luominen tapahtuu “Luo uusi resepti” -linkistä. Käyttäjälle aukeaa näkymä, jossa hän voi antaa reseptille nimen, tarvittavat raaka-aineet ja määrät, sekä ohjeen. Jokaisen valinnan jälkeen on tärkeää muistaa tallentaa käyttäjän antama määrite tekstikentän jälkeen löytyvästä tallennuslinkistä (esim. Reseptin nimen kirjoittamisen jälkeen painetaan “Anna nimi” -painiketta). Tallennuksen jälkeen käyttäjän lisäykset tulevat näkyviin sivun yläosaan. Kun kaikki valinnat on käyttäjän mielestä ok, painaa hän “tallenna” -painiketta sivun alaosasta.  
+- Oman reseptin luominen tapahtuu “Luo uusi resepti” -linkistä. Käyttäjälle aukeaa näkymä, jossa hän voi antaa reseptille nimen, tarvittavat raaka-aineet ja määrät, sekä ohjeen. Jokaisen valinnan jälkeen on tärkeää muistaa tallentaa käyttäjän antama määrite tekstikentän jälkeen löytyvästä tallennuslinkistä (esim. Reseptin nimen kirjoittamisen jälkeen painetaan “Anna nimi” -painiketta). Tallennuksen jälkeen käyttäjän lisäykset tulevat näkyviin sivun yläosaan. Kun kaikki valinnat on käyttäjän mielestä ok, painaa hän “tallenna” -painiketta sivun alaosasta.  
 
-4) Hakutoiminnalisuus toimii niin, että käyttäjä syöttää tekstikenttään hakusanan ja järjestelmä etsii tietokannasta osumat, jotka näytetään käyttäjälle. Esimerkiksi jos käyttäjä syöttää pelkän kirjaimen “a”, hakutoiminnallisuus etsii tietokannasta kaikki a-kirjaimen omaavat reseptit sekä raaka-aineet. 
+- Hakutoiminnalisuus toimii niin, että käyttäjä syöttää tekstikenttään hakusanan ja järjestelmä etsii tietokannasta osumat, jotka näytetään käyttäjälle. Esimerkiksi jos käyttäjä syöttää pelkän kirjaimen “a”, hakutoiminnallisuus etsii tietokannasta kaikki a-kirjaimen omaavat reseptit sekä raaka-aineet. 
 
 
 Puutteita:
