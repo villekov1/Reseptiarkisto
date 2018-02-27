@@ -44,14 +44,14 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         List<RaakaAine> aineet = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
-        if (!rs.next()) {
+        /*if (!rs.next()) {
             rs.close();
             stmt.close();
 
             con.close();
 
             return null;
-        }
+        }*/
 
         while (rs.next()) {
             RaakaAine r = new RaakaAine(rs.getInt("id"), rs.getString("nimi"));
